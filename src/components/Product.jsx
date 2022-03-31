@@ -1,6 +1,7 @@
 import TopBar from "./TopBar";
 import Card from "@mui/material/Card";
-import { CardMedia, CardContent,Box } from "@mui/material";
+import { CardMedia, CardContent,Box,Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 //Se mostrará en este componente utilizando material UI dos cards el primero muestra la foto el segundo muestra titulo, marca, foto,categoría ,descripción,proveedor del producto
 export default function Product(props) {
@@ -29,7 +30,9 @@ export default function Product(props) {
                <h6>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets </h6>
                
                
-                
+                <Button variant="contained" color="primary" component={Link} to={"add/"+1}>
+                    Agregar al carrito
+                </Button>
                
               </CardContent>
             </Card>
