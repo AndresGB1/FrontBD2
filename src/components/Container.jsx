@@ -7,9 +7,8 @@ export default function Container(props) {
 
   const getProductos = () => {
     axios
-      .get("http://127.0.0.1:5000/productos")
+      .get(process.env.REACT_APP_ENDPOINT+`/productos`)
       .then((res) => {
-        console.log(res.data);
         setProductos(res.data);
       })
       .catch((err) => {

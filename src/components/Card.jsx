@@ -25,7 +25,7 @@ export default function ProductCard(props) {
           </div>
           <Box sx={{ display: "flex", width: "100%" , justifyContent: "space-between", marginTop: "-5%" }}>
 
-            <div style={{ color: "gray", width:"70%", minWidth: "65%"}}>
+            <div style={{ color: "gray", width:"70%", minWidth: "65%", paddingTop: "8%"}}>
               <h5 >
                   El provedor es: {props.proveedor}
                   </h5>
