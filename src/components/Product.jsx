@@ -1,9 +1,9 @@
 import TopBar from "./TopBar";
 import Card from "@mui/material/Card";
-import { CardMedia, CardContent, Box, Button } from "@mui/material";
+import {CardContent, Box, Button } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.css";
+import "../bootstrap/css/bootstrap.css";
 
 import Carousel from "react-bootstrap/Carousel";
 import axios from "axios";
@@ -12,10 +12,34 @@ import axios from "axios";
 export default function Product(props) {
   const { id } = useParams();
 
+  //crear  comprador, cantidad, estado, fecha
+  const [cantidad, setCantidad] = useState('');
+
+
+
   const [variante, setVariante] = useState([]);
   const [variantes, setVariantes] = useState([]);
 
   const [producto, setProducto] = useState({});
+
+  const addCar = () =>{
+    axios.post(process.env.REACT_APP_ENDPOINT+'/carroCompra', {
+      comprador: sessionStorage.getItem('username'),
+      cantidad: cantidad,
+      estado: 'P',
+      fecha: new Date(),
+      Headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  } 
 
   const getProducto = () => {
     axios
@@ -67,11 +91,19 @@ export default function Product(props) {
               justifyContent: "space-between",
             }}
           >
-            <Card sx={{ width: "45%" }}>
+            <Card
+              sx={{
+                display: "flex",
+                minWidth: "45%",
+                width: "45%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Carousel>
                 {variante[1]?.map((img) => (
                   <Carousel.Item>
-                    <img width="100%" src={img} alt="First slide" />
+                    <img className="d-block w-100" src={img} height="480px" width="100%" />
                   </Carousel.Item>
                 ))}
               </Carousel>
@@ -86,11 +118,15 @@ export default function Product(props) {
                 <h6>Precio: {producto[7]}</h6>
                 <h6>Color: {variante[2]}</h6>
                 <h6>Stock: {variante[4]}</h6>
+
                 <Button
                   variant="contained"
                   color="primary"
                   component={Link}
+                  disabled={!variante[4] > 0}
                   to={"add/" + 1}
+                  onClick={() => {
+                    addCar()}}
                 >
                   Agregar al carrito
                 </Button>
@@ -102,8 +138,9 @@ export default function Product(props) {
                       onClick={() => {
                         getVariante(variante[0]);
                       }}
+                      sx={{ marginRight: "2%" }}
                     >
-                      Otra variante
+                      variante
                     </Button>
                   ))}
                 </div>

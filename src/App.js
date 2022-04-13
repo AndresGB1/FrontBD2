@@ -9,13 +9,24 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      
       <Router>
         <Routes>
           <Route exact path="/" element={<MainPage />} />
-          <Route exact path="/product/:id/add/:id" element={<Car />} />
+
           <Route exact path="/product/:id" element={<Product />} />
-          <Route exact path="/checkout/" element={<Checkout />} />
+
+          {localStorage.getItem("token") == null  ? (
+            <Route exact path="/product/:id/add/:id" element={<Login />} />
+            ) : (
+            <Route exact path="/product/:id/add/:id" element={<Car />} />
+          )}
+
+          {localStorage.getItem("token") == null ? (
+            <Route exact path="/checkout/" element={<Login />} />
+            ) : (
+            <Route exact path="/checkout/" element={<Checkout />} />
+          )}
+
           <Route exact path="/login" element={<Login />} />
           <Route path="*" element={<MainPage />} />
         </Routes>

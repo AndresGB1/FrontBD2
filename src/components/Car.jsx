@@ -8,6 +8,7 @@ export default function Car(props) {
   const [open, setOpen] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  console.log(localStorage.getItem("token"));
   return (
     <div>
       <TopBar />
