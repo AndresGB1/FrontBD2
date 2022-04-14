@@ -15,13 +15,13 @@ function App() {
 
           <Route exact path="/product/:id" element={<Product />} />
 
-          {localStorage.getItem("token") == null  ? (
-            <Route exact path="/product/:id/add/:id" element={<Login />} />
+          {sessionStorage.getItem("token") == null  ? (
+            <Route exact path="/product/:id/add/" element={<Login />} />
             ) : (
-            <Route exact path="/product/:id/add/:id" element={<Car />} />
+            <Route exact path="/product/:id/add/" element={<Car />} />
           )}
 
-          {localStorage.getItem("token") == null ? (
+          {sessionStorage.getItem("token") == null ? (
             <Route exact path="/checkout/" element={<Login />} />
             ) : (
             <Route exact path="/checkout/" element={<Checkout />} />

@@ -41,8 +41,8 @@ export default function SignIn() {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem("username", username);
-        localStorage.setItem("token", res.data.access_token);
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("token", res.data.access_token);
         window.location.reload();
       })
       .catch((err) => {
@@ -56,8 +56,8 @@ export default function SignIn() {
       <div style={{ paddingTop: "5%" }}>
         <ThemeProvider theme={theme}>
           <MainBar color="#110023" />
-          {console.log(localStorage.getItem("token"))}
-          {localStorage.getItem("token") == null ? (
+          {console.log(sessionStorage.getItem("token"))}
+          {sessionStorage.getItem("token") == null ? (
             <Container
               component="main"
               maxWidth="xs"
@@ -139,7 +139,7 @@ export default function SignIn() {
                   You are logged in.
                 </Typography>
                 <Typography component="h1" variant="h5" color="black">
-                  {localStorage.getItem("username")}
+                  {sessionStorage.getItem("username")}
                 </Typography>
                 <Typography component="h1" variant="h5" color="black">
                 do you want to log out?
@@ -150,8 +150,8 @@ export default function SignIn() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                     onClick={() => {
-                      localStorage.removeItem("token");
-                      localStorage.removeItem("username");
+                      sessionStorage.removeItem("token");
+                      sessionStorage.removeItem("username");
                       window.location.reload();
                     }}
                   >

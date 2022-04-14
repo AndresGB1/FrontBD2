@@ -13,6 +13,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DataObjectIcon from "@mui/icons-material/DataObject";
+import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
@@ -153,22 +154,18 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar>
         <Toolbar>
-          <Link to="/" >
-            <DataObjectIcon style={{ color:"white"}}/>
+          <Link to="/">
+            <DataObjectIcon style={{ color: "white" }} />
           </Link>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          {sessionStorage.getItem("token") ? (
+            <Button style={{ color: "white" }}>Ver Mis Carros de compra</Button>
+          ) : (
+            <h1></h1>
+          )}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { paddingRight: "5%" } }}>
             <Link to="/login">
-              <AccountCircle  style={{ color:"white"}}/>
+              <AccountCircle style={{ color: "white" }} />
             </Link>
           </Box>
         </Toolbar>

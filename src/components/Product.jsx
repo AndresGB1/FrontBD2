@@ -1,6 +1,6 @@
 import TopBar from "./TopBar";
 import Card from "@mui/material/Card";
-import {CardContent, Box, Button } from "@mui/material";
+import { CardContent, Box, Button } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../bootstrap/css/bootstrap.css";
@@ -13,33 +13,58 @@ export default function Product(props) {
   const { id } = useParams();
 
   //crear  comprador, cantidad, estado, fecha
-  const [cantidad, setCantidad] = useState('');
-
-
+  const [cantidad, setCantidad] = useState("");
 
   const [variante, setVariante] = useState([]);
   const [variantes, setVariantes] = useState([]);
 
   const [producto, setProducto] = useState({});
 
-  const addCar = () =>{
-    axios.post(process.env.REACT_APP_ENDPOINT+'/carroCompra', {
-      comprador: sessionStorage.getItem('username'),
-      cantidad: cantidad,
-      estado: 'P',
-      fecha: new Date(),
-      Headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+  const createCarroCompra = () => {
+    axios
+      .post(process.env.REACT_APP_ENDPOINT + "/carroCompra", {
+        comprador: sessionStorage.getItem("username"),
+        cantidad: "1",
+        estado: "P",
+        fecha: new Date(),
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      })
+      .then(function (response) {
+        
+      })
+      .catch(function (error) {
+        
+      }).post(process.env.REACT_APP_ENDPOINT + "/item", {
+        carroCompra: sessionStorage.getItem("username"),
+        variante: variante,
+        cantidad: 2,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      })
+      .then(function (response) {
+          
+        }
+      )
+      .catch(function (error) {
+
       }
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  } 
+      );
+
+     
+  };
+  
+  const addCar = () => {
+    sessionStorage.getItem("token") == null
+      ? alert("Por favor inicie sesión")
+      : createCarroCompra();
+  };
 
   const getProducto = () => {
     axios
@@ -69,7 +94,6 @@ export default function Product(props) {
       .get(process.env.REACT_APP_ENDPOINT + "/variante/" + id_variante)
       .then((res) => {
         setVariante(res.data[0]);
-        console.log(res.data[0][1]);
       })
       .catch((err) => {
         console.log(err);
@@ -103,7 +127,12 @@ export default function Product(props) {
               <Carousel>
                 {variante[1]?.map((img) => (
                   <Carousel.Item>
-                    <img className="d-block w-100" src={img} height="480px" width="100%" />
+                    <img
+                      className="d-block w-100"
+                      src={img}
+                      height="480px"
+                      width="100%"
+                    />
                   </Carousel.Item>
                 ))}
               </Carousel>
@@ -112,10 +141,10 @@ export default function Product(props) {
               <CardContent sx={{ paddingLeft: "5%" }}>
                 <h3>{producto[1]}</h3>
                 <h6>Marca: {producto[2]} </h6>
-                <h6>Categoría: {producto[3]}</h6>
-                <h6>Proveedor: {producto[8]}</h6>
-                <h6>Descripción: {producto[6]}</h6>
-                <h6>Precio: {producto[7]}</h6>
+                <h6>Categoría: {producto[2]}</h6>
+                <h6>Proveedor: {producto[7]}</h6>
+                <h6>Descripción: {producto[5]}</h6>
+                <h6>Precio: {producto[6]}</h6>
                 <h6>Color: {variante[2]}</h6>
                 <h6>Stock: {variante[4]}</h6>
 
@@ -124,9 +153,10 @@ export default function Product(props) {
                   color="primary"
                   component={Link}
                   disabled={!variante[4] > 0}
-                  to={"add/" + 1}
+                  to={window.location.pathname + "/add"}
                   onClick={() => {
-                    addCar()}}
+                    addCar();
+                  }}
                 >
                   Agregar al carrito
                 </Button>
