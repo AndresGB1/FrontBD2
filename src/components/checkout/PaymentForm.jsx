@@ -25,6 +25,16 @@ export default function PaymentForm() {
         <Grid item xs={12} md={6}>
           <TextField
             required
+            id="type"
+            label="Tipo de tarjeta"
+            fullWidth
+            autoComplete=""
+            variant="standard"
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
+            required
             id="cardNumber"
             label="Número de tarjeta"
             fullWidth

@@ -53,8 +53,8 @@ export default function Container(props) {
         onChange={(event, e) => {getProductoByCategoria(e)}}
         renderInput={(params) => <TextField {...params} label="Categoria" />}
       />
-      {productos.map((producto) => (
-        <div style={{ paddingBottom: "3%" }}>
+      {productos.map((producto, key) => (
+        <div key={key} style={{ paddingBottom: "3%" }}>
           <Card
             id={producto[0]}
             title={producto[1].toUpperCase()}

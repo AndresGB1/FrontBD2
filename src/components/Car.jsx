@@ -7,15 +7,15 @@ import axios from "axios";
 
 export default function Car(props) {
   const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  
 
-  const [carroCompra, setCarroCompra] = React.useState();
+
   const [productos, setProductos] = React.useState([]);
-  const [cantidad, setCantidad] = React.useState("");
-  const [variante, setVariante] = React.useState([]);
 
+  const [total, setTotal] = React.useState(0);
+  const [estado, setEstado] = React.useState(0);
+  const [fecha, setFecha] = React.useState('');
+  const [cantidad, setCantidad] = React.useState(0);
+  const token = sessionStorage.getItem("token");
   const getCarroCompra = () => {
     axios
       .get(
@@ -23,31 +23,62 @@ export default function Car(props) {
           `/carroCompra/` +
           sessionStorage.getItem("username"),
         {
-          Headers: {
+          headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + sessionStorage.getItem("token"),
+            Authorization: "Bearer " + token,
           },
         }
       )
       .then((res) => {
-        setCarroCompra(res.data);
+        setEstado(res.data[3] == 'P' ? 'Creando - Sin finalizar' : '');
+        setFecha(res.data[4]);
+        
+        axios.get(process.env.REACT_APP_ENDPOINT + "/items/" + res.data[0], {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then((res) => {
+            setProductos(res.data);
+            let total = 0;
+            let cantidad = 0;
+            res.data.map((producto) => {
+              total = total + producto[9] * producto[1];
+              cantidad = cantidad + producto[1];
+            });
+            setTotal(total);
+            setCantidad(cantidad);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
-      
   };
-  const getItem = () => {
-    axios.get(process.env.REACT_APP_ENDPOINT + `/producto/` + carroCompra).then((res) => {
-      setProductos(res.data);
-    });
-  };
+  React.useEffect(() => {
+    getCarroCompra();
+  }, []);
 
   return (
     <div>
       <TopBar />
       <div className="App-header">
         <div style={{ padding: "5%" }}>
+        <div style={{ paddingLeft: "10%" }}>
+          <h2>Carrito de compras</h2>
+              <h3>Total: ${total}</h3>
+              <h3>Estado: {estado}</h3>
+              <h3>Fecha: {fecha}</h3>
+              <h3>Cantidad: {cantidad}</h3>
+              <Box sx = {{ display: "flex", justifyContent: "space-around" }}>
+              <Button component={Link} to="/checkout" variant="contained">
+                checkout
+              </Button>
+              </Box>
+            </div>
           <Box
             style={{
               display: "flex",
@@ -55,28 +86,27 @@ export default function Car(props) {
               padding: "2%",
             }}
           >
+            
             <h2>Products in your Car</h2>
-            <div style={{ paddingLeft: "10%" }}>
-              <h3>Total:</h3>
-              <Button component={Link} to="/checkout" variant="contained">
-                checkout
-              </Button>
-            </div>
+            
           </Box>
-          <div style={{ paddingBottom: "5%" }}>
-            <CardCar
-              image={
-                "https://prod5.assets-cdn.io/event/7329/assets/8367866153-bb5f6325cc.jpg"
-              }
-            />
-          </div>
-          <div style={{ paddingBottom: "5%" }}>
-            <CardCar
-              image={
-                "https://www.gannett-cdn.com/-mm-/9e1f6e2ee20f44aa1f3be4f71e9f3e52b6ae2c7e/c=0-110-2121-1303/local/-/media/2021/03/16/USATODAY/usatsports/MotleyFool-TMOT-6ce98652-steaming-coffee-cup.jpg?width=2121&height=1193&fit=crop&format=pjpg&auto=webp"
-              }
-            />
-          </div>
+
+          {productos.map((producto, key) => {
+            return (
+              <Box key={key} sx={{ padding: "2%" }}>
+                <CardCar
+                  id={producto[0]}
+                  title={producto[4]}
+                  imagen={producto[6]}
+                  precioIndividual={producto[9]}
+                  precioTotal={producto[9] * producto[1]}
+                  cantidad={producto[1]}
+                  proveedor={producto[10]}
+                  color={producto[2]}
+                />
+              </Box>
+            );
+          })}
         </div>
       </div>
     </div>

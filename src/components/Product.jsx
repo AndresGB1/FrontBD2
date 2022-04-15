@@ -1,6 +1,14 @@
 import TopBar from "./TopBar";
 import Card from "@mui/material/Card";
-import { CardContent, Box, Button } from "@mui/material";
+import {
+  Select,
+  CardContent,
+  Box,
+  Button,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
+
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../bootstrap/css/bootstrap.css";
@@ -15,51 +23,52 @@ export default function Product(props) {
   //crear  comprador, cantidad, estado, fecha
   const [cantidad, setCantidad] = useState("");
 
+
   const [variante, setVariante] = useState([]);
   const [variantes, setVariantes] = useState([]);
 
   const [producto, setProducto] = useState({});
 
+  const handleChange = (event) => {
+    setCantidad(event.target.value);
+  };
+
   const createCarroCompra = () => {
     axios
-      .post(process.env.REACT_APP_ENDPOINT + "/carroCompra", {
-        comprador: sessionStorage.getItem("username"),
-        cantidad: "1",
-        estado: "P",
-        fecha: new Date(),
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("token"),
+      .post(
+        process.env.REACT_APP_ENDPOINT + "/carroCompra",
+        {
+          comprador: sessionStorage.getItem("username"),
+          estado: "P",
+          fecha: new Date(),
         },
-      })
-      .then(function (response) {
-        
-      })
-      .catch(function (error) {
-        
-      }).post(process.env.REACT_APP_ENDPOINT + "/item", {
-        carroCompra: sessionStorage.getItem("username"),
-        variante: variante,
-        cantidad: 2,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("token"),
-        },
-      })
-      .then(function (response) {
-          
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + sessionStorage.getItem("token"),
+          },
         }
       )
-      .catch(function (error) {
-
-      }
-      );
-
+      .then((res) => {
+        axios.post(
+          process.env.REACT_APP_ENDPOINT + "/item",
+          {
+            carroCompra: res.data,
+            variante: variante[0],
+            cantidad: cantidad,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + sessionStorage.getItem("token"),
+            },
+          }
+        )
+      });
      
+   
   };
-  
+
   const addCar = () => {
     sessionStorage.getItem("token") == null
       ? alert("Por favor inicie sesión")
@@ -125,13 +134,14 @@ export default function Product(props) {
               }}
             >
               <Carousel>
-                {variante[1]?.map((img) => (
-                  <Carousel.Item>
+                {variante[1]?.map((img, key) => (
+                  <Carousel.Item key={key}>
                     <img
                       className="d-block w-100"
                       src={img}
                       height="480px"
                       width="100%"
+                      alt="img"
                     />
                   </Carousel.Item>
                 ))}
@@ -146,13 +156,29 @@ export default function Product(props) {
                 <h6>Descripción: {producto[5]}</h6>
                 <h6>Precio: {producto[6]}</h6>
                 <h6>Color: {variante[2]}</h6>
-                <h6>Stock: {variante[4]}</h6>
+                <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                  <h6>Stock: {variante[4]}</h6>
+                  <h6>Cuantos deseas llevar</h6>
+                  <FormControl>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={cantidad}
+                      label="Cantidad"
+                      onChange={handleChange}
+                    >
+                      {Array.from(Array(variante[4]).keys()).map((i, key) => (
+                        <MenuItem key = {key} value={i + 1}>{i + 1}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
 
                 <Button
                   variant="contained"
                   color="primary"
                   component={Link}
-                  disabled={!variante[4] > 0}
+                  disabled={!variante[4] > 0 || cantidad === ""}
                   to={window.location.pathname + "/add"}
                   onClick={() => {
                     addCar();
@@ -161,8 +187,9 @@ export default function Product(props) {
                   Agregar al carrito
                 </Button>
                 <div>
-                  {variantes.map((variante) => (
+                  {variantes.map((variante, key) => (
                     <Button
+                      key={key}
                       variant="contained"
                       color="primary"
                       onClick={() => {

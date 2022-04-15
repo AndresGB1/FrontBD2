@@ -56,7 +56,6 @@ export default function SignIn() {
       <div style={{ paddingTop: "5%" }}>
         <ThemeProvider theme={theme}>
           <MainBar color="#110023" />
-          {console.log(sessionStorage.getItem("token"))}
           {sessionStorage.getItem("token") == null ? (
             <Container
               component="main"
