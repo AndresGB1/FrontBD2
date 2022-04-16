@@ -44,7 +44,7 @@ export default function Container(props) {
 
   return (
     <div style={{ padding: "5%" }}>
-      <h2>Products </h2>
+      <h2 style={{color: "black"}}>Products </h2>
       <Autocomplete
         disablePortal
         id="combo-box-demo"

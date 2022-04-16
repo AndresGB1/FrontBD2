@@ -21,7 +21,7 @@ export default function ProductCard(props) {
       <Box style={{ display: "flex", flexDirection: "column", minWidth:'70%' }}>
         <CardContent sx={{ padding: "4% " }}>
           <div>
-            <h3>{props.title}</h3>
+            <h3 style={{color: 'black'}}>{props.title}</h3>
           </div>
           <Box sx={{ display: "flex", width: "100%" , justifyContent: "space-between", marginTop: "-5%" }}>
 
@@ -32,7 +32,7 @@ export default function ProductCard(props) {
             </div>
 
             <div style={{ paddingLeft: "4%", width:"30%", minWidth: "35%"}}>
-              <div>Precio: ${props.precio}</div>
+              <div style={{color: 'black'}}>Precio: ${props.precio}</div>
               <div style={{ paddingBottom: "5%", paddingTop: "5%" }}>
                 <Button variant="contained" component={Link} to={"/product/"+props.id}>Ver detalles</Button>
               </div>

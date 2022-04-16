@@ -18,7 +18,7 @@ function Copyright(props) {
       variant="body2"
       color="text.secondary"
       align="center"
-      {...props}
+      sx={{paddingTop: "9%", paddingBottom: "5%"}}
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/"></Link>{" "}
@@ -60,7 +60,7 @@ export default function SignIn() {
             <Container
               component="main"
               maxWidth="xs"
-              sx={{ backgroundColor: "white", borderRadius: "4%" }}
+              sx={{  backgroundColor: "white", borderRadius: "4%", boxShadow: "0px 1px 3px #110023" }}
             >
               <CssBaseline />
               <Box
@@ -69,9 +69,10 @@ export default function SignIn() {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
+                  paddingTop: "5%"
                 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <Avatar sx={{ m: 1, bgcolor: "secondary.main"}}>
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
@@ -120,7 +121,9 @@ export default function SignIn() {
             <Container
               component="main"
               maxWidth="xs"
-              sx={{ backgroundColor: "white", borderRadius: "4%" }}
+
+              sx={{ paddingBottom: "2%", marginTop: "5%", paddingTop:'1%',backgroundColor: "white", borderRadius: "4%", boxShadow: "0px 0px 5px  #110023" }}
+
             >
               <CssBaseline />
               <Box
@@ -158,7 +161,7 @@ export default function SignIn() {
                   </Button>
                 </Box>
               </Box>
-              <Copyright sx={{ mt: 8, mb: 4 }} />
+              <Copyright sx={{ mt: 8, mb: 4}} />
             </Container>
           )}
         </ThemeProvider>

@@ -67,7 +67,7 @@ export default function Car(props) {
       <TopBar />
       <div className="App-header">
         <div style={{ padding: "5%" }}>
-        <div style={{ paddingLeft: "10%" }}>
+        <div style={{ paddingLeft: "10%", color: "black" }}>
           <h2>Carrito de compras</h2>
               <h3>Total: ${total}</h3>
               <h3>Estado: {estado}</h3>
