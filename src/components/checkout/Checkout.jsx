@@ -34,9 +34,9 @@ const steps = ["Dirección de entrega", "Detalles /Método de pago", "Revisa tu 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <AddressForm />;
-    case 1:
       return <PaymentForm />;
+      case 1:
+      return <AddressForm />;
     case 2:
       return <Review />;
     default:
@@ -56,6 +56,7 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  
 
   return (
     <div>
@@ -97,7 +98,7 @@ export default function Checkout() {
                 <React.Fragment>
                   {getStepContent(activeStep)}
                   <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    {activeStep !== 0 && (
+                    {activeStep !== 0 && activeStep !== 2 && (
                       <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                         Atrás
                       </Button>
