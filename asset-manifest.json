@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/FrontBD2/static/css/main.484f50ba.css",
-    "main.js": "/FrontBD2/static/js/main.2c82ef54.js",
+    "main.js": "/FrontBD2/static/js/main.92d52d67.js",
     "static/js/787.29e80f36.chunk.js": "/FrontBD2/static/js/787.29e80f36.chunk.js",
     "index.html": "/FrontBD2/index.html",
     "main.484f50ba.css.map": "/FrontBD2/static/css/main.484f50ba.css.map",
-    "main.2c82ef54.js.map": "/FrontBD2/static/js/main.2c82ef54.js.map",
+    "main.92d52d67.js.map": "/FrontBD2/static/js/main.92d52d67.js.map",
     "787.29e80f36.chunk.js.map": "/FrontBD2/static/js/787.29e80f36.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.484f50ba.css",
-    "static/js/main.2c82ef54.js"
+    "static/js/main.92d52d67.js"
   ]
 }
