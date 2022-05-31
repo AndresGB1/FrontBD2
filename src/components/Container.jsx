@@ -45,6 +45,7 @@ export default function Container(props) {
   return (
     <div style={{ padding: "5%" }}>
       <h2 style={{color: "black"}}>Products </h2>
+    <div style={{textAlign:"center", display:"flex", justifyContent:"space-around"}}>
       <Autocomplete
         disablePortal
         id="combo-box-demo"
@@ -53,6 +54,16 @@ export default function Container(props) {
         onChange={(event, e) => {getProductoByCategoria(e)}}
         renderInput={(params) => <TextField {...params} label="Categoria" />}
       />
+      
+       <TextField 
+       id="standard-basic" 
+       label="¿Que buscas? " 
+       variant="standard" 
+       sx={{ width: 300, color: "white"}}
+        
+       />
+       </div>
+    
       {productos.map((producto, key) => (
         <div key={key} style={{ paddingBottom: "3%" }}>
           <Card

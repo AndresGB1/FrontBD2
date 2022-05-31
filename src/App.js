@@ -3,8 +3,10 @@ import MainPage from "./components/MainPage";
 import Product from "./components/Product";
 import Login from "./components/IniciarSesion";
 import Car from "./components/Car";
+import CrearUsuario from "./components/CrearUsuario";
 import Checkout from "./components/checkout/Checkout";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route exact path="/" element={<MainPage />} />
 
           <Route exact path="/product/:id" element={<Product />} />
+
+          <Route exact path="/registro" element={<CrearUsuario />} />
 
           {sessionStorage.getItem("token") == null  ? (
             <Route exact path="/product/:id/add/" element={<Login />} />
