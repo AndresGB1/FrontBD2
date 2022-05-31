@@ -5,6 +5,7 @@ import Login from "./components/IniciarSesion";
 import Car from "./components/Car";
 import CrearUsuario from "./components/CrearUsuario";
 import Checkout from "./components/checkout/Checkout";
+import Agregarproducto from "./components/Agregarproducto";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
@@ -18,6 +19,8 @@ function App() {
           <Route exact path="/product/:id" element={<Product />} />
 
           <Route exact path="/registro" element={<CrearUsuario />} />
+
+          <Route exact path="/Agregarproducto" element={<Agregarproducto />} />
 
           {sessionStorage.getItem("token") == null  ? (
             <Route exact path="/product/:id/add/" element={<Login />} />
